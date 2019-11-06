@@ -21,7 +21,7 @@
 #
 
 %bcond_without ocf
-%bcond_without cephfs_java
+%bcond_with cephfs_java
 %if 0%{?suse_version}
 %bcond_with ceph_test_package
 %else
@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	2
+Release:	3
 %if 0%{?fedora} || 0%{?rhel}
 Epoch:		2
 %else if 0%{?openeuler}
@@ -170,7 +170,7 @@ BuildRequires:	which
 BuildRequires:	xfsprogs
 BuildRequires:	xfsprogs-devel
 BuildRequires:	xmlstarlet
-BuildRequires:	yasm
+BuildRequires:  yasm
 BuildRequires:	chrpath
 
 #################################################################################
@@ -204,7 +204,6 @@ BuildRequires:	keyutils-libs-devel
 BuildRequires:	libibverbs-devel
 BuildRequires:  openldap-devel
 BuildRequires:  openssl-devel
-BuildRequires:  redhat-lsb-core
 BuildRequires:	Cython
 BuildRequires:	python-prettytable
 BuildRequires:	python-sphinx
@@ -748,6 +747,7 @@ Requires:	java
 Requires:	libcephfs_jni1 = %{_epoch_prefix}%{version}-%{release}
 Requires:       junit
 BuildRequires:  junit
+
 %description -n cephfs-java
 This package contains the Java libraries for the Ceph File System.
 
@@ -1802,5 +1802,11 @@ exit 0
 
 
 %changelog
+* Mon Oct 21 2019 caomeng <caomeng5@huawei.com> - 1:12.2.8-3
+- Type:enhancement
+- ID:NA
+- SUG:NA
+- DESC:delete build requirement redhat-lsb-core
+
 * Mon Sep 9 2019 guiyao <guiyao@huawei.com> - 1:12.2.8-2
 - openEuler Init
