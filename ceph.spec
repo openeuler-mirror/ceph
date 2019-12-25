@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	3
+Release:	4
 %if 0%{?fedora} || 0%{?rhel}
 Epoch:		2
 %else if 0%{?openeuler}
@@ -95,6 +95,7 @@ Patch3:		0003-src-rocksdb-table-block.h.patch
 Patch6000:	6000-CVE-2018-16889.patch
 Patch6001:	6001-CVE-2018-16846-1.patch
 Patch6002:	6002-CVE-2018-16846-2.patch
+Patch6003:      6003-CVE-2018-14662.patch
 
 %if 0%{?suse_version}
 %if 0%{?is_opensuse}
@@ -1802,11 +1803,17 @@ exit 0
 
 
 %changelog
-* Mon Oct 21 2019 caomeng <caomeng5@huawei.com> - 1:12.2.8-3
+* Mon Dec 23 2019 openEuler Buildteam <buildteam@openeuler.org> - 1:12.2.8-4
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:fix CVE-2018-14662
+
+* Mon Oct 21 2019 openEuler Buildteam <buildteam@openeuler.org> - 1:12.2.8-3
 - Type:enhancement
 - ID:NA
 - SUG:NA
 - DESC:delete build requirement redhat-lsb-core
 
-* Mon Sep 9 2019 guiyao <guiyao@huawei.com> - 1:12.2.8-2
+* Mon Sep 9 2019 openEuler Buildteam <buildteam@openeuler.org> - 1:12.2.8-2
 - openEuler Init
