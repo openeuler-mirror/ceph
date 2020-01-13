@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	4
+Release:	5
 %if 0%{?fedora} || 0%{?rhel}
 Epoch:		2
 %else if 0%{?openeuler}
@@ -86,10 +86,6 @@ Group:		System/Filesystems
 %endif
 URL:		http://ceph.com/
 Source0:	http://ceph.com/download/ceph-12.2.8.tar.gz
-Patch0:		0000-src-rocksdb-util-murmurhash.patch
-Patch1:		0001-cmake-Support-ppc64.patch
-Patch2:		0002-librbd-Conditionally-import-TrimRequest.cc.patch
-Patch3:		0003-src-rocksdb-table-block.h.patch
 
 # backport for cves
 Patch6000:	6000-CVE-2018-16889.patch
@@ -1803,6 +1799,9 @@ exit 0
 
 
 %changelog
+* Sat Jan 11 2020 openEuler Buildteam <buildteam@openeuler.org> - 1:12.2.8-5
+- openEuler repackage
+
 * Mon Dec 23 2019 openEuler Buildteam <buildteam@openeuler.org> - 1:12.2.8-4
 - Type:bugfix
 - ID:NA
