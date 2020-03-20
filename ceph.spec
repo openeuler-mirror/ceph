@@ -34,7 +34,7 @@
 %bcond_without tcmalloc
 %endif
 %bcond_with lowmem_builder
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %bcond_without selinux
 %endif
 %if 0%{?suse_version}
@@ -42,7 +42,7 @@
 %endif
 
 # LTTng-UST enabled on Fedora, RHEL 6+, and SLE (not openSUSE)
-%if 0%{?fedora} || 0%{?rhel} >= 6 || 0%{?suse_version}
+%if 0%{?fedora} || 0%{?rhel} >= 6 || 0%{?suse_version} || 0%{?openEuler}
 %if ! 0%{?is_opensuse}
 %bcond_without lttng
 %endif
@@ -68,12 +68,8 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	5
-%if 0%{?fedora} || 0%{?rhel}
+Release:	6
 Epoch:		2
-%else if 0%{?openeuler}
-Epoch:		1
-%endif
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
 # undefined
@@ -118,7 +114,7 @@ BuildRequires:	selinux-policy-devel
 BuildRequires:	selinux-policy-doc
 %endif
 %if 0%{with make_check}
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 BuildRequires:	python-cherrypy
 BuildRequires:	python-werkzeug
 %endif
@@ -192,7 +188,7 @@ BuildRequires:	python-PrettyTable
 BuildRequires:	python-Sphinx
 BuildRequires:  rdma-core-devel
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 Requires:	systemd
 BuildRequires:  boost-random
 BuildRequires:	btrfs-progs
@@ -206,7 +202,7 @@ BuildRequires:	python-prettytable
 BuildRequires:	python-sphinx
 %endif
 # python34-... for RHEL, python3-... for all other supported distros
-%if 0%{?rhel} && ! 0%{?openeuler}
+%if 0%{?rhel} && ! 0%{?openEuler}
 BuildRequires:	python34-devel
 BuildRequires:	python34-setuptools
 BuildRequires:	python34-Cython
@@ -217,7 +213,7 @@ BuildRequires:	python3-Cython
 %endif
 # lttng and babeltrace for rbd-replay-prep
 %if %{with lttng}
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 BuildRequires:	lttng-ust-devel
 BuildRequires:	libbabeltrace-devel
 %endif
@@ -229,11 +225,13 @@ BuildRequires:  babeltrace-devel
 %if 0%{?suse_version}
 BuildRequires:	libexpat-devel
 %endif
-%if 0%{?rhel} || 0%{?fedora}
+%if 0%{?rhel} || 0%{?fedora} || 0%{?openEuler}
 BuildRequires:	expat-devel
 %endif
 #hardened-cc1
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?openEuler}
+BuildRequires:  openEuler-rpm-config
+%else if 0%{?fedora} || 0%{?rhel}
 BuildRequires:  redhat-rpm-config
 %endif
 
@@ -287,7 +285,7 @@ Requires:	python-rados = %{_epoch_prefix}%{version}-%{release}
 Requires:	python-rbd = %{_epoch_prefix}%{version}-%{release}
 Requires:	python-cephfs = %{_epoch_prefix}%{version}-%{release}
 Requires:	python-rgw = %{_epoch_prefix}%{version}-%{release}
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 Requires:	python-prettytable
 %endif
 %if 0%{?suse_version}
@@ -321,7 +319,7 @@ Group:		System/Filesystems
 Requires:	ceph-base = %{_epoch_prefix}%{version}-%{release}
 Requires:	python-six
 # For ceph-rest-api
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 Requires:      python-flask
 %endif
 %if 0%{?suse_version}
@@ -340,7 +338,7 @@ Group:          System/Filesystems
 %endif
 Requires:       ceph-base = %{_epoch_prefix}%{version}-%{release}
 Requires:       python-six
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 Requires:       python-cherrypy
 Requires:       python-jinja2
 Requires:       python-werkzeug
@@ -410,7 +408,7 @@ Requires:	ceph-selinux = %{_epoch_prefix}%{version}-%{release}
 %endif
 Requires:	librados2 = %{_epoch_prefix}%{version}-%{release}
 Requires:	librgw2 = %{_epoch_prefix}%{version}-%{release}
-%if 0%{?rhel} || 0%{?fedora}
+%if 0%{?rhel} || 0%{?fedora} || 0%{?openEuler}
 Requires:	mailcap
 %endif
 %description radosgw
@@ -440,7 +438,7 @@ Group:		System/Filesystems
 %endif
 Requires:	ceph-base = %{_epoch_prefix}%{version}-%{release}
 # for sgdisk, used by ceph-disk
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 Requires:	gdisk
 %endif
 %if 0%{?suse_version}
@@ -458,7 +456,7 @@ Summary:	RADOS distributed object store client library
 %if 0%{?suse_version}
 Group:		System/Libraries
 %endif
-%if 0%{?rhel} || 0%{?fedora}
+%if 0%{?rhel} || 0%{?fedora} || 0%{?openEuler}
 Obsoletes:	ceph-libs < %{_epoch_prefix}%{version}-%{release}
 %endif
 %description -n librados2
@@ -582,7 +580,7 @@ Requires:	librados2 = %{_epoch_prefix}%{version}-%{release}
 %if 0%{?suse_version}
 Requires(post): coreutils
 %endif
-%if 0%{?rhel} || 0%{?fedora}
+%if 0%{?rhel} || 0%{?fedora} || 0%{?openEuler}
 Obsoletes:	ceph-libs < %{_epoch_prefix}%{version}-%{release}
 %endif
 %description -n librbd1
@@ -634,7 +632,7 @@ Summary:	Ceph distributed file system client library
 Group:		System/Libraries
 %endif
 Obsoletes:	libcephfs1
-%if 0%{?rhel} || 0%{?fedora}
+%if 0%{?rhel} || 0%{?fedora} || 0%{?openEuler}
 Obsoletes:	ceph-libs < %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	ceph-libcephfs
 %endif
@@ -845,7 +843,7 @@ cmake .. \
     -DWITH_MANPAGE=ON \
     -DWITH_PYTHON3=ON \
     -DWITH_SYSTEMD=ON \
-%if 0%{?rhel} && ! 0%{?centos}
+%if 0%{?rhel} && (! 0%{?centos} || ! 0%{?openEuler})
     -DWITH_SUBMAN=ON \
 %endif
 %if 0%{without ceph_test_package}
@@ -896,7 +894,7 @@ make DESTDIR=%{buildroot} install
 rm -f %{buildroot}/%{_sysconfdir}/init.d/ceph
 popd
 install -m 0644 -D src/etc-rbdmap %{buildroot}%{_sysconfdir}/ceph/rbdmap
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 install -m 0644 -D etc/sysconfig/ceph %{buildroot}%{_sysconfdir}/sysconfig/ceph
 %endif
 %if 0%{?suse_version}
@@ -988,7 +986,7 @@ rm -rf %{buildroot}
 %{_libdir}/libosd_tp.so*
 %endif
 %config(noreplace) %{_sysconfdir}/logrotate.d/ceph
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %config(noreplace) %{_sysconfdir}/sysconfig/ceph
 %endif
 %if 0%{?suse_version}
@@ -1028,7 +1026,7 @@ if [ $1 -eq 1 ] ; then
 /usr/bin/systemctl preset ceph-disk@\*.service ceph.target >/dev/null 2>&1 || :
 fi
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_post ceph-disk@\*.service ceph.target
 %endif
 if [ $1 -eq 1 ] ; then
@@ -1039,7 +1037,7 @@ fi
 %if 0%{?suse_version}
 %service_del_preun ceph-disk@\*.service ceph.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_preun ceph-disk@\*.service ceph.target
 %endif
 
@@ -1050,7 +1048,7 @@ test -n "$FIRST_ARG" || FIRST_ARG=$1
 DISABLE_RESTART_ON_UPDATE="yes"
 %service_del_postun ceph-disk@\*.service ceph.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_postun ceph-disk@\*.service ceph.target
 %endif
 if [ $FIRST_ARG -ge 1 ] ; then
@@ -1131,7 +1129,7 @@ fi
 %pre common
 CEPH_GROUP_ID=167
 CEPH_USER_ID=167
-%if 0%{?rhel} || 0%{?fedora}
+%if 0%{?rhel} || 0%{?fedora} || 0%{?openEuler}
 /usr/sbin/groupadd ceph -g $CEPH_GROUP_ID -o -r 2>/dev/null || :
 /usr/sbin/useradd ceph -u $CEPH_USER_ID -o -r -g ceph -s /sbin/nologin -c "Ceph daemons" -d %{_localstatedir}/lib/ceph 2>/dev/null || :
 %endif
@@ -1177,7 +1175,7 @@ if [ $1 -eq 1 ] ; then
   /usr/bin/systemctl preset ceph-mds@\*.service ceph-mds.target >/dev/null 2>&1 || :
 fi
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_post ceph-mds@\*.service ceph-mds.target
 %endif
 if [ $1 -eq 1 ] ; then
@@ -1188,7 +1186,7 @@ fi
 %if 0%{?suse_version}
 %service_del_preun ceph-mds@\*.service ceph-mds.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_preun ceph-mds@\*.service ceph-mds.target
 %endif
 
@@ -1198,7 +1196,7 @@ test -n "$FIRST_ARG" || FIRST_ARG=$1
 DISABLE_RESTART_ON_UPDATE="yes"
 %service_del_postun ceph-mds@\*.service ceph-mds.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_postun ceph-mds@\*.service ceph-mds.target
 %endif
 if [ $FIRST_ARG -ge 1 ] ; then
@@ -1226,7 +1224,7 @@ if [ $1 -eq 1 ] ; then
   /usr/bin/systemctl preset ceph-mgr@\*.service ceph-mgr.target >/dev/null 2>&1 || :
 fi
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_post ceph-mgr@\*.service ceph-mgr.target
 %endif
 if [ $1 -eq 1 ] ; then
@@ -1237,7 +1235,7 @@ fi
 %if 0%{?suse_version}
 %service_del_preun ceph-mgr@\*.service ceph-mgr.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_preun ceph-mgr@\*.service ceph-mgr.target
 %endif
 
@@ -1247,7 +1245,7 @@ test -n "$FIRST_ARG" || FIRST_ARG=$1
 DISABLE_RESTART_ON_UPDATE="yes"
 %service_del_postun ceph-mgr@\*.service ceph-mgr.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_postun ceph-mgr@\*.service ceph-mgr.target
 %endif
 if [ $FIRST_ARG -ge 1 ] ; then
@@ -1279,7 +1277,7 @@ if [ $1 -eq 1 ] ; then
   /usr/bin/systemctl preset ceph-mon@\*.service ceph-mon.target >/dev/null 2>&1 || :
 fi
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_post ceph-mon@\*.service ceph-mon.target
 %endif
 if [ $1 -eq 1 ] ; then
@@ -1290,7 +1288,7 @@ fi
 %if 0%{?suse_version}
 %service_del_preun ceph-mon@\*.service ceph-mon.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_preun ceph-mon@\*.service ceph-mon.target
 %endif
 
@@ -1300,7 +1298,7 @@ test -n "$FIRST_ARG" || FIRST_ARG=$1
 DISABLE_RESTART_ON_UPDATE="yes"
 %service_del_postun ceph-mon@\*.service ceph-mon.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_postun ceph-mon@\*.service ceph-mon.target
 %endif
 if [ $FIRST_ARG -ge 1 ] ; then
@@ -1338,7 +1336,7 @@ if [ $1 -eq 1 ] ; then
   /usr/bin/systemctl preset ceph-rbd-mirror@\*.service ceph-rbd-mirror.target >/dev/null 2>&1 || :
 fi
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_post ceph-rbd-mirror@\*.service ceph-rbd-mirror.target
 %endif
 if [ $1 -eq 1 ] ; then
@@ -1349,7 +1347,7 @@ fi
 %if 0%{?suse_version}
 %service_del_preun ceph-rbd-mirror@\*.service ceph-rbd-mirror.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_preun ceph-rbd-mirror@\*.service ceph-rbd-mirror.target
 %endif
 
@@ -1359,7 +1357,7 @@ test -n "$FIRST_ARG" || FIRST_ARG=$1
 DISABLE_RESTART_ON_UPDATE="yes"
 %service_del_postun ceph-rbd-mirror@\*.service ceph-rbd-mirror.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_postun ceph-rbd-mirror@\*.service ceph-rbd-mirror.target
 %endif
 if [ $FIRST_ARG -ge 1 ] ; then
@@ -1394,7 +1392,7 @@ if [ $1 -eq 1 ] ; then
   /usr/bin/systemctl preset ceph-radosgw@\*.service ceph-radosgw.target >/dev/null 2>&1 || :
 fi
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_post ceph-radosgw@\*.service ceph-radosgw.target
 %endif
 if [ $1 -eq 1 ] ; then
@@ -1405,7 +1403,7 @@ fi
 %if 0%{?suse_version}
 %service_del_preun ceph-radosgw@\*.service ceph-radosgw.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_preun ceph-radosgw@\*.service ceph-radosgw.target
 %endif
 
@@ -1415,7 +1413,7 @@ test -n "$FIRST_ARG" || FIRST_ARG=$1
 DISABLE_RESTART_ON_UPDATE="yes"
 %service_del_postun ceph-radosgw@\*.service ceph-radosgw.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_postun ceph-radosgw@\*.service ceph-radosgw.target
 %endif
 if [ $FIRST_ARG -ge 1 ] ; then
@@ -1447,7 +1445,7 @@ fi
 %{_mandir}/man8/ceph-bluestore-tool.8*
 %{_mandir}/man8/ceph-volume.8*
 %{_mandir}/man8/ceph-volume-systemd.8*
-%if 0%{?rhel} && ! 0%{?centos} && ! 0%{?openeuler}
+%if 0%{?rhel} && (! 0%{?centos} && ! 0%{?openEuler})
 %attr(0755,-,-) %{_sysconfdir}/cron.hourly/subman
 %endif
 %{_unitdir}/ceph-osd@.service
@@ -1462,7 +1460,7 @@ if [ $1 -eq 1 ] ; then
   /usr/bin/systemctl preset ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target >/dev/null 2>&1 || :
 fi
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_post ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target
 %endif
 if [ $1 -eq 1 ] ; then
@@ -1480,7 +1478,7 @@ chown -f -h ceph:ceph /var/lib/ceph/osd/*/block* 2>&1 > /dev/null || :
 %if 0%{?suse_version}
 %service_del_preun ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_preun ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target
 %endif
 
@@ -1490,7 +1488,7 @@ test -n "$FIRST_ARG" || FIRST_ARG=$1
 DISABLE_RESTART_ON_UPDATE="yes"
 %service_del_postun ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target
 %endif
-%if 0%{?fedora} || 0%{?rhel}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 %systemd_postun ceph-osd@\*.service ceph-volume@\*.service ceph-osd.target
 %endif
 if [ $FIRST_ARG -ge 1 ] ; then
@@ -1799,6 +1797,9 @@ exit 0
 
 
 %changelog
+* Fri Mar 20 2020 hy-euler <eulerstoragemt@huawei.com> - 1:12.2.8-6
+- Fit openEuler 
+
 * Sat Jan 11 2020 openEuler Buildteam <buildteam@openeuler.org> - 1:12.2.8-5
 - openEuler repackage
 
