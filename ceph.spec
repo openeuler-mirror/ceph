@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	6
+Release:	7
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -1797,6 +1797,9 @@ exit 0
 
 
 %changelog
+* Mon May 18 2020 wangchen <wangchen137@huawei.com> - 1:12.2.8-7
+- rebuild for ceph
+
 * Fri Mar 20 2020 hy-euler <eulerstoragemt@huawei.com> - 1:12.2.8-6
 - Fit openEuler 
 
