@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	6
+Release:	7
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -154,7 +154,6 @@ BuildRequires:	python2-devel
 BuildRequires:	python-nose
 BuildRequires:	python-requests
 BuildRequires:	python-six
-BuildRequires:	python-virtualenv
 BuildRequires:	snappy-devel
 BuildRequires:	udev
 BuildRequires:	util-linux
@@ -1797,6 +1796,9 @@ exit 0
 
 
 %changelog
+* Fri Sep 25 2020 wuguanghao <wuguanghao3@huawei.com> - 1:12.2.8-7
+- remove the python-virtualenv package from BuildRequires to solve the compilation problem 
+
 * Fri Mar 20 2020 hy-euler <eulerstoragemt@huawei.com> - 1:12.2.8-6
 - Fit openEuler 
 
