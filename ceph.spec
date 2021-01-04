@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	8
+Release:	9
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -84,10 +84,11 @@ URL:		http://ceph.com/
 Source0:	http://ceph.com/download/ceph-12.2.8.tar.gz
 
 # backport for cves
-Patch6000:	6000-CVE-2018-16889.patch
-Patch6001:	6001-CVE-2018-16846-1.patch
-Patch6002:	6002-CVE-2018-16846-2.patch
-Patch6003:      6003-CVE-2018-14662.patch
+Patch1:	0001-CVE-2018-16889.patch
+Patch2:	0002-CVE-2018-16846-1.patch
+Patch3:	0003-CVE-2018-16846-2.patch
+Patch4: 0004-CVE-2018-14662.patch
+Patch5: 0005-CVE-2020-12059.patch
 
 %if 0%{?suse_version}
 %if 0%{?is_opensuse}
@@ -1796,6 +1797,9 @@ exit 0
 
 
 %changelog
+* Wed Dec 30 2020 yanglongkang <yanglongkang@huawei.com> - 1:12.2.8-9
+- fix CVE-2020-12059
+
 * Fri Sep 25 2020 wuguanghao <wuguanghao3@huawei.com> - 1:12.2.8-8
 - remove the python-virtualenv package from BuildRequires to solve the compilation problem 
 
