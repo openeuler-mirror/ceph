@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	7
+Release:	8
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -286,10 +286,10 @@ Requires:	python-rbd = %{_epoch_prefix}%{version}-%{release}
 Requires:	python-cephfs = %{_epoch_prefix}%{version}-%{release}
 Requires:	python-rgw = %{_epoch_prefix}%{version}-%{release}
 %if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
-Requires:	python-prettytable
+Requires:	python2-prettytable
 %endif
 %if 0%{?suse_version}
-Requires:	python-PrettyTable
+Requires:	python2-PrettyTable
 %endif
 Requires:	python-requests
 %{?systemd_requires}
@@ -1797,6 +1797,9 @@ exit 0
 
 
 %changelog
+* Wed Jan 27 2021 Zhiqiang Liu <liuzhiqiang26@huawei.com> - 1:12.2.8-8
+- correct ceph-common requires python2-prettytable version.
+
 * Wed Dec 30 2020 yanglongkang <yanglongkang@huawei.com> - 1:12.2.8-7
 - fix CVE-2020-12059
   remove the python-virtualenv package from BuildRequires to solve the compilation problem 
