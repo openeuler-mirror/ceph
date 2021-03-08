@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	10
+Release:	11
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -340,8 +340,8 @@ Requires:       ceph-base = %{_epoch_prefix}%{version}-%{release}
 Requires:       python-six
 %if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 Requires:       python-cherrypy
-Requires:       python-jinja2
-Requires:       python-werkzeug
+Requires:       python2-jinja2
+Requires:       python2-werkzeug
 Requires:       pyOpenSSL
 %endif
 %if 0%{?suse_version}
@@ -1797,6 +1797,9 @@ exit 0
 
 
 %changelog
+* Thu Mar 4 2021 Shaoning Zhang <zhangshaoning@uniontech.com> - 1:12.2.8-11
+- correct ceph-mgr requires python2-jinja2 and python2-werkzeug
+
 * Wed Jan 27 2021 Zhiqiang Liu <liuzhiqiang26@huawei.com> - 1:12.2.8-10
 - correct ceph-common requires python2-prettytable version.
 
