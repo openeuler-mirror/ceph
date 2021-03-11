@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	11
+Release:	12
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -89,6 +89,8 @@ Patch2:	0002-CVE-2018-16846-1.patch
 Patch3:	0003-CVE-2018-16846-2.patch
 Patch4: 0004-CVE-2018-14662.patch
 Patch5: 0005-CVE-2020-12059.patch
+Patch6: 0006-CVE-2020-25678-1.patch
+Patch7: 0007-CVE-2020-25678-2.patch
 
 %if 0%{?suse_version}
 %if 0%{?is_opensuse}
@@ -1797,6 +1799,9 @@ exit 0
 
 
 %changelog
+* Wed Mar 10 2021 Zhuohui Zou <zhuohui@xsky.com> - 1:12.2.8-12
+- fix CVE-2020-25678
+
 * Thu Mar 4 2021 Shaoning Zhang <zhangshaoning@uniontech.com> - 1:12.2.8-11
 - correct ceph-mgr requires python2-jinja2 and python2-werkzeug
 
