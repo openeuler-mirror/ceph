@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	13
+Release:	14
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -99,6 +99,11 @@ Patch12: 0012-CVE-2020-27781-2.patch
 Patch13: 0013-CVE-2020-27781-3.patch
 Patch14: 0014-CVE-2020-27781-4.patch
 Patch15: 0015-CVE-2020-27781-5.patch
+Patch16: 0016-CVE-2020-10753-1.patch
+Patch17: 0017-CVE-2021-3524-1.patch
+Patch18: 0018-CVE-2020-1760-1.patch
+Patch19: 0019-CVE-2020-1760-2.patch
+Patch20: 0020-CVE-2020-1760-3.patch
 
 %if 0%{?suse_version}
 %if 0%{?is_opensuse}
@@ -1807,6 +1812,11 @@ exit 0
 
 
 %changelog
+* Mon Jul 26 2021 chixinze <xmdxcxz@gmail.com> - 1:12.2.8-14
+- fix CVE-2020-10753
+- fix CVE-2021-3524
+- fix CVE-2020-1760
+
 * Sun Jul 18 2021 chixinze <xmdxcxz@gmail.com> - 1:12.2.8-13
 - fix CVE-2020-27781
 - ceph-volume-client: allow atomic updates for RADOS objects
