@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	12
+Release:	13
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -91,6 +91,14 @@ Patch4: 0004-CVE-2018-14662.patch
 Patch5: 0005-CVE-2020-12059.patch
 Patch6: 0006-CVE-2020-25678-1.patch
 Patch7: 0007-CVE-2020-25678-2.patch
+Patch8: 0008-ceph-volume-client-allow-atomic-updates-for-RADOS-ob.patch
+Patch9: 0009-qa-ceph-volume-add-a-test-for-put_object_versioned.patch
+Patch10: 0010-qa-make-test_volume_client.py-py3-compatible.patch
+Patch11: 0011-CVE-2020-27781-1.patch
+Patch12: 0012-CVE-2020-27781-2.patch
+Patch13: 0013-CVE-2020-27781-3.patch
+Patch14: 0014-CVE-2020-27781-4.patch
+Patch15: 0015-CVE-2020-27781-5.patch
 
 %if 0%{?suse_version}
 %if 0%{?is_opensuse}
@@ -1799,6 +1807,11 @@ exit 0
 
 
 %changelog
+* Sun Jul 18 2021 chixinze <xmdxcxz@gmail.com> - 1:12.2.8-13
+- fix CVE-2020-27781
+- ceph-volume-client: allow atomic updates for RADOS objects
+- qa: make test_volume_client.py py3 compatible
+
 * Wed Mar 10 2021 Zhuohui Zou <zhuohui@xsky.com> - 1:12.2.8-12
 - fix CVE-2020-25678
 

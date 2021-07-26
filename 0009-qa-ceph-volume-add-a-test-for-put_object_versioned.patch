@@ -1,0 +1,49 @@
+From ee6625c29179dd5aa34b2da4d9af75e87f13316e Mon Sep 17 00:00:00 2001
+From: Rishabh Dave <rishabhddave@gmail.com>
+Date: Thu, 7 Jun 2018 12:29:36 +0000
+Subject: [PATCH 2/2] qa/ceph-volume: add a test for put_object_versioned()
+
+Test if the version passed to put_object_versioned() is used to
+crosscheck.
+
+Signed-off-by: Rishabh Dave <ridave@redhat.com>
+(cherry picked from commit 8ab6f84d5799cf2f32fb2b08168ff1cfb82f7d15)
+---
+ qa/tasks/cephfs/test_volume_client.py | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/qa/tasks/cephfs/test_volume_client.py b/qa/tasks/cephfs/test_volume_client.py
+index 9be7fc2fff5..cf135bce122 100644
+--- a/qa/tasks/cephfs/test_volume_client.py
++++ b/qa/tasks/cephfs/test_volume_client.py
+@@ -970,6 +970,27 @@ vc.disconnect()
+             obj_data = obj_data
+         )))
+ 
++    def test_put_object_versioned(self):
++        vc_mount = self.mounts[1]
++        vc_mount.umount_wait()
++        self._configure_vc_auth(vc_mount, "manila")
++
++        obj_data = 'test_data'
++        obj_name = 'test_vc_ob_2'
++        pool_name = self.fs.get_data_pool_names()[0]
++        self.fs.rados(['put', obj_name, '-'], pool=pool_name, stdin_data=obj_data)
++
++        # Test if put_object_versioned() crosschecks the version of the
++        # given object. Being a negative test, an exception is expected.
++        with self.assertRaises(CommandFailedError):
++            self._volume_client_python(vc_mount, dedent("""
++                data, version = vc.get_object_and_version("{pool_name}", "{obj_name}")
++                data += 'm1'
++                vc.put_object("{pool_name}", "{obj_name}", data)
++                data += 'm2'
++                vc.put_object_versioned("{pool_name}", "{obj_name}", data, version)
++            """).format(pool_name=pool_name, obj_name=obj_name))
++
+     def test_delete_object(self):
+         vc_mount = self.mounts[1]
+         vc_mount.umount_wait()
+-- 
+2.23.0
+
