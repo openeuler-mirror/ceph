@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	13
+Release:	14
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -781,7 +781,7 @@ Group:		System/Filesystems
 Requires:	ceph-base = %{_epoch_prefix}%{version}-%{release}
 Requires:	policycoreutils, libselinux-utils
 Requires(post):	ceph-base = %{_epoch_prefix}%{version}-%{release}
-Requires(post): selinux-policy-base >= %{_selinux_policy_version}, policycoreutils, gawk
+Requires(post): selinux-policy-minimum >= %{_selinux_policy_version}, policycoreutils, gawk
 Requires(postun): policycoreutils
 %description selinux
 This package contains SELinux support for Ceph MON, OSD and MDS. The package
@@ -1812,6 +1812,9 @@ exit 0
 
 
 %changelog
+* Fri Aug 6 2021 chixinze <xmdxcxz@gmail.com> - 1:12.2.8-14
+- fix https://gitee.com/src-openeuler/ceph/issues/I43TE9
+
 * Mon Jul 26 2021 chixinze <xmdxcxz@gmail.com> - 1:12.2.8-13
 - fix CVE-2020-10753
 - fix CVE-2021-3524
