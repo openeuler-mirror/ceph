@@ -1,0 +1,39 @@
+From e4e07de8f36d0d44b341d5784a8bf56192201b95 Mon Sep 17 00:00:00 2001
+From: Adam Kupczyk <akupczyk@redhat.com>
+Date: Mon, 25 Jan 2021 11:33:28 +0100
+Subject: [PATCH] common/mempool: Add test for mempool shards
+
+Add test that checks quality of mempool sharing.
+It refuses to accept cases when variance is too large.
+
+Signed-off-by: Adam Kupczyk <akupczyk@redhat.com>
+---
+ src/include/mempool.h    |  9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/src/include/mempool.h b/src/include/mempool.h
+index 2247cb15bc0..a18f6a502da 100644
+--- a/src/include/mempool.h
++++ b/src/include/mempool.h
+@@ -255,11 +255,16 @@ public:
+ 
+   void adjust_count(ssize_t items, ssize_t bytes);
+ 
+-  shard_t* pick_a_shard() {
++  static size_t pick_a_shard_int() {
+     // Dirt cheap, see:
+-    //   http://fossies.org/dox/glibc-2.24/pthread__self_8c_source.html
++    //   https://fossies.org/dox/glibc-2.32/pthread__self_8c_source.html
+     size_t me = (size_t)pthread_self();
+     size_t i = (me >> 3) & ((1 << num_shard_bits) - 1);
++    return i;
++  }
++
++  shard_t* pick_a_shard() {
++    size_t i = pick_a_shard_int();
+     return &shard[i];
+   }
+
+-- 
+2.23.0.windows.1
+
