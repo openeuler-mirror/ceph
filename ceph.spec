@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	15
+Release:	16
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -104,6 +104,9 @@ Patch17: 0017-CVE-2021-3524-1.patch
 Patch18: 0018-CVE-2020-1760-1.patch
 Patch19: 0019-CVE-2020-1760-2.patch
 Patch20: 0020-CVE-2020-1760-3.patch
+Patch21: 0021-common-mempool-Add-test-for-mempool-shards.patch
+Patch22: 0022-common-mempool-Modify-shard-selection-function.patch
+Patch23: 0023-common-mempool-only-fail-tests-if-sharding-is-very-b.patch
 
 %if 0%{?suse_version}
 %if 0%{?is_opensuse}
@@ -1812,6 +1815,10 @@ exit 0
 
 
 %changelog
+* Wed Dec 29 2021 Li Qiang <liqiang64@huawei.com> - 1:12.2.8-16
+- Synchronize the performance optimization of the pick_a_shard
+- function in the upstream community.
+
 * Fri Aug 6 2021 chixinze <xmdxcxz@gmail.com> - 1:12.2.8-15
 - fix https://gitee.com/src-openeuler/ceph/issues/I43TE9
 
