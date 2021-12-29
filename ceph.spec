@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	16
+Release:	17
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -104,6 +104,9 @@ Patch17: 0017-CVE-2021-3524-1.patch
 Patch18: 0018-CVE-2020-1760-1.patch
 Patch19: 0019-CVE-2020-1760-2.patch
 Patch20: 0020-CVE-2020-1760-3.patch
+Patch21: 0021-common-mempool-Add-test-for-mempool-shards.patch
+Patch22: 0022-common-mempool-Modify-shard-selection-function.patch
+Patch23: 0023-common-mempool-only-fail-tests-if-sharding-is-very-b.patch
 
 Requires:	glibc >= 2.28-66
 
@@ -1852,6 +1855,10 @@ exit 0
 
 
 %changelog
+* Sat Jan 29 2022 liuqinfei <liuqinfei5@hisilicon.com> - 1:12.2.8-17
+- Synchronize the performance optimization of the pick_a_shard
+- function in the upstream community.
+
 * Fri Aug 20 2021 zhouwenpei <zhouwenpei1@huawei.com> - 1:12.2.8-16
 - fix ceph dh function unavailable
 
