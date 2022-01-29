@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	18
+Release:	19
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -1855,6 +1855,9 @@ exit 0
 
 
 %changelog
+* Sat Jan 29 2022 liuqinfei <liuqinfei5@hisilicon.com> - 1:12.2.8-19
+- sync release version for openEuler-20.03-LTS* branches
+
 * Sat Jan 29 2022 liuqinfei <liuqinfei5@hisilicon.com> - 1:12.2.8-18
 - correct ceph-mgr requires python2-jinja2 and python2-werkzeug
 
