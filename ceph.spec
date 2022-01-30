@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	19
+Release:	20
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -107,6 +107,7 @@ Patch20: 0020-CVE-2020-1760-3.patch
 Patch21: 0021-common-mempool-Add-test-for-mempool-shards.patch
 Patch22: 0022-common-mempool-Modify-shard-selection-function.patch
 Patch23: 0023-common-mempool-only-fail-tests-if-sharding-is-very-b.patch
+Patch24: 0024-CVE-2021-3979.patch
 
 Requires:	glibc >= 2.28-66
 
@@ -1855,6 +1856,9 @@ exit 0
 
 
 %changelog
+* Sun Jan 29 2022 luo rixin <luorixin@huawei.com> - 1:12.2.8-20
+- fix CVE-2021-3979
+
 * Sat Jan 29 2022 liuqinfei <liuqinfei5@hisilicon.com> - 1:12.2.8-19
 - sync release version for openEuler-20.03-LTS* branches
 
