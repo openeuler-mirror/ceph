@@ -1,0 +1,27 @@
+From db79769d6d557acc021a434ff285db2d69458d0a Mon Sep 17 00:00:00 2001
+From: singuliere <singuliere@autistici.org>
+Date: Wed, 17 Mar 2021 07:35:04 +0100
+Subject: [PATCH] common/mempool: only fail tests if sharding is very bad
+
+Fixes: https://tracker.ceph.com/issues/49781
+Signed-off-by: singuliere <singuliere@autistici.org>
+---
+ src/include/mempool.h    |  2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/include/mempool.h b/src/include/mempool.h
+index c03aa175cfa..fe84f3b8f09 100644
+--- a/src/include/mempool.h
++++ b/src/include/mempool.h
+@@ -259,7 +259,7 @@ public:
+     // Dirt cheap, see:
+     //   https://fossies.org/dox/glibc-2.32/pthread__self_8c_source.html
+     size_t me = (size_t)pthread_self();
+-    size_t i = (me >> 12) & ((1 << num_shard_bits) - 1);
++    size_t i = (me >> CEPH_PAGE_SHIFT) & ((1 << num_shard_bits) - 1);
+     return i;
+   }
+
+-- 
+2.23.0.windows.1
+

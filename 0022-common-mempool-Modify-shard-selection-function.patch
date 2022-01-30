@@ -1,0 +1,28 @@
+From fccbdc0905e3868666fbb10803bac6b73f687cb1 Mon Sep 17 00:00:00 2001
+From: Adam Kupczyk <akupczyk@redhat.com>
+Date: Mon, 25 Jan 2021 11:45:06 +0100
+Subject: [PATCH] common/mempool: Modify shard selection function
+
+Modify shard selection function, so no longer all threads use the same shard 0.
+
+Signed-off-by: Adam Kupczyk <akupczyk@redhat.com>
+---
+ src/include/mempool.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/include/mempool.h b/src/include/mempool.h
+index a18f6a502da..c03aa175cfa 100644
+--- a/src/include/mempool.h
++++ b/src/include/mempool.h
+@@ -259,7 +259,7 @@ public:
+     // Dirt cheap, see:
+     //   https://fossies.org/dox/glibc-2.32/pthread__self_8c_source.html
+     size_t me = (size_t)pthread_self();
+-    size_t i = (me >> 3) & ((1 << num_shard_bits) - 1);
++    size_t i = (me >> 12) & ((1 << num_shard_bits) - 1);
+     return i;
+   }
+ 
+-- 
+2.23.0.windows.1
+
