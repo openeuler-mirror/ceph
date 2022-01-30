@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	17
+Release:	19
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -364,8 +364,8 @@ Requires:       ceph-base = %{_epoch_prefix}%{version}-%{release}
 Requires:       python-six
 %if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 Requires:       python-cherrypy
-Requires:       python-jinja2
-Requires:       python-werkzeug
+Requires:       python2-jinja2
+Requires:       python2-werkzeug
 Requires:       pyOpenSSL
 %endif
 %if 0%{?suse_version}
@@ -1855,6 +1855,12 @@ exit 0
 
 
 %changelog
+* Sat Jan 29 2022 liuqinfei <liuqinfei5@hisilicon.com> - 1:12.2.8-19
+- sync release version for openEuler-20.03-LTS* branches
+
+* Sat Jan 29 2022 liuqinfei <liuqinfei5@hisilicon.com> - 1:12.2.8-18
+- correct ceph-mgr requires python2-jinja2 and python2-werkzeug
+
 * Thu Jan 27 2022 zhouwenpei <zhouwenpei1@h-partners.com> - 1:12.2.8-17
 - fix ceph dh function unavailable
 
