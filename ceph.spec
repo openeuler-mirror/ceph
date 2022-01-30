@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	14
+Release:	19
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -104,6 +104,11 @@ Patch17: 0017-CVE-2021-3524-1.patch
 Patch18: 0018-CVE-2020-1760-1.patch
 Patch19: 0019-CVE-2020-1760-2.patch
 Patch20: 0020-CVE-2020-1760-3.patch
+Patch21: 0021-common-mempool-Add-test-for-mempool-shards.patch
+Patch22: 0022-common-mempool-Modify-shard-selection-function.patch
+Patch23: 0023-common-mempool-only-fail-tests-if-sharding-is-very-b.patch
+
+Requires:	glibc >= 2.28-66
 
 %if 0%{?suse_version}
 %if 0%{?is_opensuse}
@@ -285,6 +290,7 @@ Requires:      which
 %if 0%{?suse_version}
 Recommends:    ntp-daemon
 %endif
+Requires:glibc >= 2.28-66
 %description base
 Base is the package that includes all the files shared amongst ceph servers
 
@@ -311,6 +317,7 @@ Requires:	python-requests
 %if 0%{?suse_version}
 Requires(pre):	pwdutils
 %endif
+Requires:glibc >= 2.28-66
 %description -n ceph-common
 Common utilities to mount and interact with a ceph storage cluster.
 Comprised of files that are common to Ceph clients and servers.
@@ -321,6 +328,7 @@ Summary:	Ceph Metadata Server Daemon
 Group:		System/Filesystems
 %endif
 Requires:	ceph-base = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description mds
 ceph-mds is the metadata server daemon for the Ceph distributed file system.
 One or more instances of ceph-mds collectively manage the file system
@@ -340,6 +348,7 @@ Requires:      python-flask
 %if 0%{?suse_version}
 Requires:      python-Flask
 %endif
+Requires:glibc >= 2.28-66
 %description mon
 ceph-mon is the cluster monitor daemon for the Ceph distributed file
 system. One or more instances of ceph-mon form a Paxos part-time
@@ -355,8 +364,8 @@ Requires:       ceph-base = %{_epoch_prefix}%{version}-%{release}
 Requires:       python-six
 %if 0%{?fedora} || 0%{?rhel} || 0%{?openEuler}
 Requires:       python-cherrypy
-Requires:       python-jinja2
-Requires:       python-werkzeug
+Requires:       python2-jinja2
+Requires:       python2-werkzeug
 Requires:       pyOpenSSL
 %endif
 %if 0%{?suse_version}
@@ -366,6 +375,7 @@ Requires:       python-Werkzeug
 Requires:       python-pyOpenSSL
 %endif
 Requires:       python-pecan
+Requires:glibc >= 2.28-66
 %description mgr
 ceph-mgr enables python modules that provide services (such as the REST
 module derived from Calamari) and expose CLI hooks.  ceph-mgr gathers
@@ -378,6 +388,7 @@ Summary:	Ceph fuse-based client
 Group:		System/Filesystems
 %endif
 Requires:       fuse
+Requires:glibc >= 2.28-66
 %description fuse
 FUSE based client for Ceph distributed network file system
 
@@ -388,6 +399,7 @@ Group:		System/Filesystems
 %endif
 Requires:	librados2 = %{_epoch_prefix}%{version}-%{release}
 Requires:	librbd1 = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n rbd-fuse
 FUSE based client to map Ceph rbd images to files
 
@@ -398,6 +410,7 @@ Group:		System/Filesystems
 %endif
 Requires:	ceph-common = %{_epoch_prefix}%{version}-%{release}
 Requires:	librados2 = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n rbd-mirror
 Daemon for mirroring RBD images between Ceph clusters, streaming
 changes asynchronously.
@@ -409,6 +422,7 @@ Group:		System/Filesystems
 %endif
 Requires:	librados2 = %{_epoch_prefix}%{version}-%{release}
 Requires:	librbd1 = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n rbd-nbd
 NBD based client to map Ceph rbd images to local device
 
@@ -426,6 +440,7 @@ Requires:	librgw2 = %{_epoch_prefix}%{version}-%{release}
 %if 0%{?rhel} || 0%{?fedora} || 0%{?openEuler}
 Requires:	mailcap
 %endif
+Requires:glibc >= 2.28-66
 %description radosgw
 RADOS is a distributed object store used by the Ceph distributed
 storage system.  This package provides a REST gateway to the
@@ -440,6 +455,7 @@ Group:		System/Filesystems
 %endif
 Requires:	ceph-base = %{_epoch_prefix}%{version}
 Requires:	resource-agents
+Requires:glibc >= 2.28-66
 %description resource-agents
 Resource agents for monitoring and managing Ceph daemons
 under Open Cluster Framework (OCF) compliant resource
@@ -461,6 +477,7 @@ Requires:	gptfdisk
 %endif
 Requires:	parted
 Requires:	lvm2
+Requires:glibc >= 2.28-66
 %description osd
 ceph-osd is the object storage daemon for the Ceph distributed file
 system.  It is responsible for storing objects on a local file system
@@ -474,6 +491,7 @@ Group:		System/Libraries
 %if 0%{?rhel} || 0%{?fedora} || 0%{?openEuler}
 Obsoletes:	ceph-libs < %{_epoch_prefix}%{version}-%{release}
 %endif
+Requires:glibc >= 2.28-66
 %description -n librados2
 RADOS is a reliable, autonomic distributed object storage cluster
 developed as part of the Ceph distributed storage system. This is a
@@ -489,6 +507,7 @@ Requires:	librados2 = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	ceph-devel < %{_epoch_prefix}%{version}-%{release}
 Provides:	librados2-devel = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	librados2-devel < %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n librados-devel
 This package contains libraries and headers needed to develop programs
 that use RADOS object store.
@@ -499,6 +518,7 @@ Summary:	RADOS gateway client library
 Group:		System/Libraries
 %endif
 Requires:	librados2 = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n librgw2
 This package provides a library implementation of the RADOS gateway
 (distributed object store with S3 and Swift personalities).
@@ -512,6 +532,7 @@ Requires:	librados-devel = %{_epoch_prefix}%{version}-%{release}
 Requires:	librgw2 = %{_epoch_prefix}%{version}-%{release}
 Provides:	librgw2-devel = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	librgw2-devel < %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n librgw-devel
 This package contains libraries and headers needed to develop programs
 that use RADOS gateway client library.
@@ -524,6 +545,7 @@ Group:		Development/Languages/Python
 Requires:	librgw2 = %{_epoch_prefix}%{version}-%{release}
 Requires:	python-rados = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	python-ceph < %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n python-rgw
 This package contains Python 2 libraries for interacting with Cephs RADOS
 gateway.
@@ -535,6 +557,7 @@ Group:		Development/Languages/Python
 %endif
 Requires:	librgw2 = %{_epoch_prefix}%{version}-%{release}
 Requires:	python%{python3_pkgversion}-rados = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n python%{python3_pkgversion}-rgw
 This package contains Python 3 libraries for interacting with Cephs RADOS
 gateway.
@@ -546,6 +569,7 @@ Group:		Development/Languages/Python
 %endif
 Requires:	librados2 = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	python-ceph < %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n python-rados
 This package contains Python 2 libraries for interacting with Cephs RADOS
 object store.
@@ -557,6 +581,7 @@ Group:		Development/Languages/Python
 %endif
 Requires:	python%{python3_pkgversion}
 Requires:	librados2 = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n python%{python3_pkgversion}-rados
 This package contains Python 3 libraries for interacting with Cephs RADOS
 object store.
@@ -567,6 +592,7 @@ Summary:	RADOS striping interface
 Group:		System/Libraries
 %endif
 Requires:	librados2 = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n libradosstriper1
 Striping interface built on top of the rados library, allowing
 to stripe bigger objects onto several standard rados objects using
@@ -582,6 +608,7 @@ Requires:	librados-devel = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	ceph-devel < %{_epoch_prefix}%{version}-%{release}
 Provides:	libradosstriper1-devel = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	libradosstriper1-devel < %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n libradosstriper-devel
 This package contains libraries and headers needed to develop programs
 that use RADOS striping interface.
@@ -598,6 +625,7 @@ Requires(post): coreutils
 %if 0%{?rhel} || 0%{?fedora} || 0%{?openEuler}
 Obsoletes:	ceph-libs < %{_epoch_prefix}%{version}-%{release}
 %endif
+Requires:glibc >= 2.28-66
 %description -n librbd1
 RBD is a block device striped across multiple distributed objects in
 RADOS, a reliable, autonomic distributed object storage cluster
@@ -614,6 +642,7 @@ Requires:	librados-devel = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	ceph-devel < %{_epoch_prefix}%{version}-%{release}
 Provides:	librbd1-devel = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	librbd1-devel < %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n librbd-devel
 This package contains libraries and headers needed to develop programs
 that use RADOS block device.
@@ -626,6 +655,7 @@ Group:		Development/Languages/Python
 Requires:	librbd1 = %{_epoch_prefix}%{version}-%{release}
 Requires:	python-rados = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	python-ceph < %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n python-rbd
 This package contains Python 2 libraries for interacting with Cephs RADOS
 block device.
@@ -637,6 +667,7 @@ Group:		Development/Languages/Python
 %endif
 Requires:	librbd1 = %{_epoch_prefix}%{version}-%{release}
 Requires:	python%{python3_pkgversion}-rados = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n python%{python3_pkgversion}-rbd
 This package contains Python 3 libraries for interacting with Cephs RADOS
 block device.
@@ -651,6 +682,7 @@ Obsoletes:	libcephfs1
 Obsoletes:	ceph-libs < %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	ceph-libcephfs
 %endif
+Requires:glibc >= 2.28-66
 %description -n libcephfs2
 Ceph is a distributed network file system designed to provide excellent
 performance, reliability, and scalability. This is a shared library
@@ -667,6 +699,7 @@ Requires:	librados-devel = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	ceph-devel < %{_epoch_prefix}%{version}-%{release}
 Provides:	libcephfs2-devel = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	libcephfs2-devel < %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n libcephfs-devel
 This package contains libraries and headers needed to develop programs
 that use Cephs distributed file system.
@@ -681,6 +714,7 @@ Requires:	libcephfs2 = %{_epoch_prefix}%{version}-%{release}
 Recommends: python-rados = %{_epoch_prefix}%{version}-%{release}
 %endif
 Obsoletes:	python-ceph < %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n python-cephfs
 This package contains Python 2 libraries for interacting with Cephs distributed
 file system.
@@ -692,6 +726,7 @@ Group:		Development/Languages/Python
 %endif
 Requires:	libcephfs2 = %{_epoch_prefix}%{version}-%{release}
 Requires:	python%{python3_pkgversion}-rados = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n python%{python3_pkgversion}-cephfs
 This package contains Python 3 libraries for interacting with Cephs distributed
 file system.
@@ -701,6 +736,7 @@ Summary:	Python 3 utility libraries for Ceph CLI
 %if 0%{?suse_version}
 Group:		Development/Languages/Python
 %endif
+Requires:glibc >= 2.28-66
 %description -n python%{python3_pkgversion}-ceph-argparse
 This package contains types and routines for Python 3 used by the Ceph CLI as
 well as the RESTful interface. These have to do with querying the daemons for
@@ -717,6 +753,7 @@ Requires:	ceph-common = %{_epoch_prefix}%{version}-%{release}
 Requires:	xmlstarlet
 Requires:	jq
 Requires:	socat
+Requires:glibc >= 2.28-66
 %description -n ceph-test
 This package contains Ceph benchmarks and test tools.
 %endif
@@ -730,6 +767,7 @@ Group:		System/Libraries
 %endif
 Requires:	java
 Requires:	libcephfs2 = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n libcephfs_jni1
 This package contains the Java Native Interface library for CephFS Java
 bindings.
@@ -744,6 +782,7 @@ Requires:	libcephfs_jni1 = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	ceph-devel < %{_epoch_prefix}%{version}-%{release}
 Provides:	libcephfs_jni1-devel = %{_epoch_prefix}%{version}-%{release}
 Obsoletes:	libcephfs_jni1-devel < %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n libcephfs_jni-devel
 This package contains the development files for CephFS Java Native Interface
 library.
@@ -757,6 +796,7 @@ Requires:	java
 Requires:	libcephfs_jni1 = %{_epoch_prefix}%{version}-%{release}
 Requires:       junit
 BuildRequires:  junit
+Requires:glibc >= 2.28-66
 
 %description -n cephfs-java
 This package contains the Java libraries for the Ceph File System.
@@ -767,6 +807,7 @@ This package contains the Java libraries for the Ceph File System.
 Summary:        RADOS object class development kit
 Group:          Development/Libraries
 Requires:       librados2-devel = %{_epoch_prefix}%{version}-%{release}
+Requires:glibc >= 2.28-66
 %description -n rados-objclass-devel
 This package contains libraries and headers needed to develop RADOS object
 class plugins.
@@ -783,6 +824,7 @@ Requires:	policycoreutils, libselinux-utils
 Requires(post):	ceph-base = %{_epoch_prefix}%{version}-%{release}
 Requires(post): selinux-policy-minimum >= %{_selinux_policy_version}, policycoreutils, gawk
 Requires(postun): policycoreutils
+Requires:glibc >= 2.28-66
 %description selinux
 This package contains SELinux support for Ceph MON, OSD and MDS. The package
 also performs file-system relabelling which can take a long time on heavily
@@ -801,6 +843,7 @@ Requires:	python-rbd = %{_epoch_prefix}%{version}-%{release}
 Requires:	python-cephfs = %{_epoch_prefix}%{version}-%{release}
 Requires:	python-rgw = %{_epoch_prefix}%{version}-%{release}
 Provides:	python-ceph
+Requires:glibc >= 2.28-66
 %description -n python-ceph-compat
 This is a compatibility package to accommodate python-ceph split into
 python-rados, python-rbd, python-rgw and python-cephfs. Packages still
@@ -1812,6 +1855,19 @@ exit 0
 
 
 %changelog
+* Sat Jan 29 2022 liuqinfei <liuqinfei5@hisilicon.com> - 1:12.2.8-19
+- sync release version for openEuler-20.03-LTS* branches
+
+* Sat Jan 29 2022 liuqinfei <liuqinfei5@hisilicon.com> - 1:12.2.8-17
+- correct ceph-mgr requires python2-jinja2 and python2-werkzeug
+
+* Sat Jan 29 2022 liuqinfei <liuqinfei5@hisilicon.com> - 1:12.2.8-16
+- fix ceph dh function unavailable
+
+* Sat Jan 29 2022 liuqinfei <liuqinfei5@hisilicon.com> - 1:12.2.8-15
+- Synchronize the performance optimization of the pick_a_shard
+- function in the upstream community.
+
 * Fri Aug 6 2021 chixinze <xmdxcxz@gmail.com> - 1:12.2.8-14
 - fix https://gitee.com/src-openeuler/ceph/issues/I43TE9
 
