@@ -68,7 +68,7 @@
 #################################################################################
 Name:		ceph
 Version:	12.2.8
-Release:	20
+Release:	21
 Epoch:		2
 
 # define _epoch_prefix macro which will expand to the empty string if epoch is
@@ -108,6 +108,7 @@ Patch21: 0021-common-mempool-Add-test-for-mempool-shards.patch
 Patch22: 0022-common-mempool-Modify-shard-selection-function.patch
 Patch23: 0023-common-mempool-only-fail-tests-if-sharding-is-very-b.patch
 Patch24: 0024-CVE-2021-3979.patch
+Patch25: 0025-fix-rgw-ldap-safe_read_file-can-return-0.patch
 
 Requires:	glibc >= 2.28-66
 
@@ -1856,6 +1857,9 @@ exit 0
 
 
 %changelog
+* Mon May 23 2022 wangzengliang <wangzengliang1@huawei.com> - 2:12.2.8-21
+- fix rgw ldap:safe_read_file can return 0
+
 * Sun Jan 29 2022 luo rixin <luorixin@huawei.com> - 1:12.2.8-20
 - fix CVE-2021-3979
 

@@ -1,0 +1,31 @@
+From 65cd8accc127c6765f083a389455ce73b7517e11 Mon Sep 17 00:00:00 2001
+From: Matt Benjamin <mbenjamin@redhat.com>
+Date: Fri, 4 Jan 2019 15:31:56 -0500
+Subject: [PATCH] rgw ldap: safe_read_file can return < 0
+
+Avoid invalid string access when LDAP auth is enabled, but LDAP
+secret is not set.  This is Casey's fix for the problem.
+
+Fixes: https://tracker.ceph.com/issues/24228
+
+Signed-off-by: Matt Benjamin <mbenjamin@redhat.com>
+---
+ src/rgw/rgw_ldap.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/rgw/rgw_ldap.cc b/src/rgw/rgw_ldap.cc
+index a39afa6c..d1681641 100644
+--- a/src/rgw/rgw_ldap.cc
++++ b/src/rgw/rgw_ldap.cc
+@@ -27,7 +27,7 @@ std::string parse_rgw_ldap_bindpw(CephContext* ctx)
+       memset(bindpw, 0, 1024);
+       int pwlen = safe_read_file("" /* base */, ldap_secret.c_str(),
+ 				 bindpw, 1023);
+-    if (pwlen) {
++    if (pwlen > 0) {
+       ldap_bindpw = bindpw;
+       boost::algorithm::trim(ldap_bindpw);
+       if (ldap_bindpw.back() == '\n')
+-- 
+2.30.0
+
